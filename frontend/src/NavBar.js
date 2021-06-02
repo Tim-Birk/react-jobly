@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { NavLink as Link } from 'react-router-dom';
 import './NavBar.css';
 
 import {
@@ -7,8 +8,8 @@ import {
   NavbarToggler,
   NavbarBrand,
   Nav,
-  NavItem,
   NavLink,
+  NavItem,
   Container,
 } from 'reactstrap';
 
@@ -25,24 +26,36 @@ const NavBar = (props) => {
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className='mr-auto' navbar>
-              <NavItem>
-                <NavLink href='/companies'>Companies</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href='/jobs'>Jobs</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href='/profile'>Profile</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href='/logout'>Logout</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href='/login'>Login</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href='/signup'>Sign Up</NavLink>
-              </NavItem>
+              <Link to='/companies'>
+                <NavItem>
+                  <NavLink>Companies</NavLink>
+                </NavItem>
+              </Link>
+              <Link to='/jobs'>
+                <NavItem>
+                  <NavLink>Jobs</NavLink>
+                </NavItem>
+              </Link>
+              <Link to='/profile'>
+                <NavItem>
+                  <NavLink>Profile</NavLink>
+                </NavItem>
+              </Link>
+              <Link to='/logout'>
+                <NavItem>
+                  <NavLink>Logout</NavLink>
+                </NavItem>
+              </Link>
+              <Link to='/login'>
+                <NavItem>
+                  <NavLink>Login</NavLink>
+                </NavItem>
+              </Link>
+              <Link to='/signup'>
+                <NavItem>
+                  <NavLink>Sign Up</NavLink>
+                </NavItem>
+              </Link>
             </Nav>
           </Collapse>
         </Container>
