@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import Spinner from './Spinner';
 import JoblyApi from './JoblyAPI';
+import CompanyCard from './CompanyCard';
+import './CompanyList.css';
 
 const CompanyList = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -8,11 +10,12 @@ const CompanyList = () => {
 
   useEffect(() => {
     async function getCompanies() {
-      let companies = await JoblyApi.getCompanies();
-      setCompanies(companies);
+      let allCompanies = await JoblyApi.getCompanies();
+      console.log(allCompanies);
+      setCompanies(allCompanies);
       // let drinks = await SnackOrBoozeApi.getMenuItems();
       // setDrinks(drinks);
-      //   setIsLoading(false);
+      setIsLoading(false);
     }
 
     // Load companies from database and set global state for each array
@@ -21,7 +24,24 @@ const CompanyList = () => {
 
   if (isLoading) return <Spinner />;
 
-  return <div>Company List</div>;
+  return (
+    <div className='col-md-8 offset-md-2'>
+      <ul className='company-list'>
+        {companies
+          ? companies.map((company) => (
+              <li key={company.handle}>
+                <CompanyCard
+                  handle={company.handle}
+                  name={company.name}
+                  description={company.description}
+                  logo={company.logoUrl}
+                />
+              </li>
+            ))
+          : null}
+      </ul>
+    </div>
+  );
 };
 
 export default CompanyList;
