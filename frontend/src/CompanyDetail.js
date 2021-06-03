@@ -19,7 +19,7 @@ const CompanyDetail = ({}) => {
 
     // Load company from database and set global state for each array
     getCompanyDetail();
-  }, []);
+  }, [handle]);
 
   if (isLoading) return <Spinner />;
 
