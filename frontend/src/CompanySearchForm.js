@@ -20,7 +20,6 @@ const CompanySearchForm = ({ getCompanies }) => {
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     setIsLoading(true);
-    console.log(formData.searchTerm);
     await getCompanies(formData.searchTerm);
     setIsLoading(false);
     setFormData(intialState);
