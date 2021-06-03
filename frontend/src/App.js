@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import CompanyList from './CompanyList';
 import CompanyDetail from './CompanyDetail';
+import JobsList from './JobsList';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -23,7 +24,7 @@ function App() {
               <CompanyDetail />
             </Route>
             <Route exact path='/jobs'>
-              <div>Jobs List</div>
+              <JobsList />
             </Route>
             <Route exact path='/profile'>
               <div>Profile</div>
