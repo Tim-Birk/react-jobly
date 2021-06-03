@@ -2,6 +2,7 @@ import NavBar from './NavBar';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import CompanyList from './CompanyList';
+import CompanyDetail from './CompanyDetail';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -19,7 +20,7 @@ function App() {
               <CompanyList />
             </Route>
             <Route path='/companies/:handle'>
-              <div>Company Jobs</div>
+              <CompanyDetail />
             </Route>
             <Route exact path='/jobs'>
               <div>Jobs List</div>

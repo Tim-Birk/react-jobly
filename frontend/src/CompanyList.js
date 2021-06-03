@@ -11,10 +11,7 @@ const CompanyList = () => {
   useEffect(() => {
     async function getCompanies() {
       let allCompanies = await JoblyApi.getCompanies();
-      console.log(allCompanies);
       setCompanies(allCompanies);
-      // let drinks = await SnackOrBoozeApi.getMenuItems();
-      // setDrinks(drinks);
       setIsLoading(false);
     }
 

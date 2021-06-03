@@ -7,7 +7,7 @@ const DEFAULT_LOGO_URL = '/logos/logo4.png';
 const CompanyCard = ({ handle, name, description, logo }) => {
   return (
     <Link className='card-link' to={`/companies/${handle}`}>
-      <Card className='mb-2'>
+      <Card className='company-card mb-2'>
         <CardBody>
           <div className='text-content'>
             <CardTitle tag='h6'>{name}</CardTitle>
