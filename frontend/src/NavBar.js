@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { NavLink as Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import UserContext from './UserContext';
+import { NavLink as Link, useHistory } from 'react-router-dom';
 import './NavBar.css';
 
 import {
@@ -13,10 +14,17 @@ import {
   Container,
 } from 'reactstrap';
 
-const NavBar = (props) => {
+const NavBar = ({ logout }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useContext(UserContext);
+  const history = useHistory();
 
   const toggle = () => setIsOpen(!isOpen);
+
+  const handleLogout = () => {
+    logout();
+    history.push('/');
+  };
 
   return (
     <div>
@@ -26,36 +34,43 @@ const NavBar = (props) => {
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className='mr-auto' navbar>
-              <Link to='/companies'>
-                <NavItem>
-                  <NavLink>Companies</NavLink>
-                </NavItem>
-              </Link>
-              <Link to='/jobs'>
-                <NavItem>
-                  <NavLink>Jobs</NavLink>
-                </NavItem>
-              </Link>
-              <Link to='/profile'>
-                <NavItem>
-                  <NavLink>Profile</NavLink>
-                </NavItem>
-              </Link>
-              <Link to='/logout'>
-                <NavItem>
-                  <NavLink>Logout</NavLink>
-                </NavItem>
-              </Link>
-              <Link to='/login'>
-                <NavItem>
-                  <NavLink>Login</NavLink>
-                </NavItem>
-              </Link>
-              <Link to='/signup'>
-                <NavItem>
-                  <NavLink>Sign Up</NavLink>
-                </NavItem>
-              </Link>
+              {user ? (
+                <>
+                  <Link to='/companies'>
+                    <NavItem>
+                      <NavLink>Companies</NavLink>
+                    </NavItem>
+                  </Link>
+                  <Link to='/jobs'>
+                    <NavItem>
+                      <NavLink>Jobs</NavLink>
+                    </NavItem>
+                  </Link>
+                  <Link to='/profile'>
+                    <NavItem>
+                      <NavLink>Profile</NavLink>
+                    </NavItem>
+                  </Link>
+                  <NavItem>
+                    <NavLink onClick={handleLogout}>
+                      Logout {user.username}
+                    </NavLink>
+                  </NavItem>
+                </>
+              ) : (
+                <>
+                  <Link to='/login'>
+                    <NavItem>
+                      <NavLink>Login</NavLink>
+                    </NavItem>
+                  </Link>
+                  <Link to='/signup'>
+                    <NavItem>
+                      <NavLink>Sign Up</NavLink>
+                    </NavItem>
+                  </Link>
+                </>
+              )}
             </Nav>
           </Collapse>
         </Container>

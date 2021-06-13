@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import UserContext from './UserContext';
+import { useHistory } from 'react-router-dom';
 import Spinner from './Spinner';
 import JoblyApi from './JoblyAPI';
 import CompanyCard from './CompanyCard';
@@ -8,6 +10,8 @@ import './CompanyList.css';
 const CompanyList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [companies, setCompanies] = useState([]);
+  const { user } = useContext(UserContext);
+  const history = useHistory();
 
   async function getCompanies(searchTerm) {
     let allCompanies = await JoblyApi.getCompanies(searchTerm);
@@ -16,9 +20,13 @@ const CompanyList = () => {
   }
 
   useEffect(() => {
+    if (!user) {
+      history.push('/login');
+    }
+
     // Load companies from database and set global state for each array
     getCompanies();
-  }, []);
+  }, [user, history]);
 
   if (isLoading) return <Spinner />;
 

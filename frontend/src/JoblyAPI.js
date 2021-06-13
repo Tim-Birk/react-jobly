@@ -48,13 +48,33 @@ class JoblyApi {
     return res.company;
   }
 
-  // Individual API routes
   /** Get all jobs. */
 
   static async getJobs(title) {
     const url = title ? `jobs?title=${title}` : 'jobs';
     let res = await this.request(url);
     return res.jobs;
+  }
+
+  /** Add a new user. */
+
+  static async addUser(user) {
+    let res = await this.request('auth/register', user, 'post');
+    return res.token;
+  }
+
+  /** Login an exister user. */
+
+  static async loginUser(user) {
+    let res = await this.request('auth/token', user, 'post');
+    return res.token;
+  }
+
+  /** Get user details. */
+
+  static async getUser(username) {
+    let res = await this.request(`users/${username}`);
+    return res.user;
   }
 }
 
