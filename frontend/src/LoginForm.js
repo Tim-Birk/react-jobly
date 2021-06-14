@@ -1,9 +1,9 @@
 import { useState, useContext, useEffect } from 'react';
 import UserContext from './UserContext';
-import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import { Form, FormGroup, Label, Input, Button, Alert } from 'reactstrap';
 import { useHistory } from 'react-router-dom';
 
-const LoginForm = ({ loginUser }) => {
+const LoginForm = ({ loginUser, error }) => {
   const intialState = {
     username: '',
     password: '',
@@ -65,6 +65,11 @@ const LoginForm = ({ loginUser }) => {
             onChange={handleChange}
           />
         </FormGroup>
+        {error && error.type === 'login' ? (
+          <Alert className='mt-2' color='danger'>
+            {error.message}
+          </Alert>
+        ) : null}
 
         <Button className='mt-2' disabled={isLoading} color='primary'>
           Login

@@ -1,10 +1,10 @@
 import { useState, useContext, useEffect } from 'react';
 import UserContext from './UserContext';
-import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import { Form, FormGroup, Label, Input, Button, Alert } from 'reactstrap';
 import { useHistory } from 'react-router-dom';
 import './SignupForm.css';
 
-const SignupForm = ({ addUser }) => {
+const SignupForm = ({ addUser, error }) => {
   const intialState = {
     username: '',
     password: '',
@@ -37,8 +37,10 @@ const SignupForm = ({ addUser }) => {
       setIsLoading(true);
       await addUser(formData);
       setIsLoading(false);
-      setFormData(intialState);
-      history.push('/companies');
+      if (user) {
+        setFormData(intialState);
+        history.push('/companies');
+      }
     } catch (e) {
       alert(e);
       setIsLoading(false);
@@ -100,6 +102,11 @@ const SignupForm = ({ addUser }) => {
             onChange={handleChange}
           />
         </FormGroup>
+        {error && error.type === 'signup' ? (
+          <Alert className='mt-2' color='danger'>
+            {error.message}
+          </Alert>
+        ) : null}
 
         <Button className='mt-2' disabled={isLoading} color='primary'>
           Sign Up

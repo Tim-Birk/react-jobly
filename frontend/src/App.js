@@ -20,8 +20,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState(null);
   const [token, setToken] = useLocalStorage('tokenKey');
-
-  // const [applicationIds, setApplicationIds] = useState(new Set([]));
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     /* If the value of token changes the refresh all of the user info stored
@@ -58,8 +57,11 @@ function App() {
       const userToken = await JoblyAPI.addUser(newUser);
       // Set token to trigger useEffect
       setToken(userToken);
+      //clear previous errors
+      setErrorMessage(null);
     } catch (e) {
       setToken(null);
+      setErrorMessage({ type: 'signup', message: e });
       console.log('Add user error:', e);
     }
   };
@@ -70,9 +72,11 @@ function App() {
       const userToken = await JoblyAPI.loginUser(userToLogin);
       // Set token to trigger useEffect
       setToken(userToken);
+      //clear previous errors
+      setErrorMessage(null);
     } catch (e) {
       setToken(null);
-      console.log('Login error');
+      setErrorMessage({ type: 'login', message: e });
       console.log('Login user error:', e);
     }
   };
@@ -112,10 +116,10 @@ function App() {
                   <div>Profile</div>
                 </Route>
                 <Route path='/login'>
-                  <LoginForm loginUser={loginUser} />
+                  <LoginForm loginUser={loginUser} error={errorMessage} />
                 </Route>
                 <Route path='/signup'>
-                  <SignupForm addUser={addUser} />
+                  <SignupForm addUser={addUser} error={errorMessage} />
                 </Route>
                 <Route>
                   <div>Not Found Component</div>
