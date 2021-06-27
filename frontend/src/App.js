@@ -8,6 +8,7 @@ import CompanyDetail from './CompanyDetail';
 import Home from './Home';
 import JobsList from './JobsList';
 import LoginForm from './LoginForm';
+import Profile from './Profile';
 import SignupForm from './SignupForm';
 import Spinner from './Spinner';
 import JoblyAPI from './JoblyAPI';
@@ -66,6 +67,36 @@ function App() {
     }
   };
 
+  const updateUser = async (existingUser) => {
+    try {
+      // Rerun login user to make sure they provided correct password before updating profile
+      const loginSuccess = await loginUser({
+        username: user.username,
+        password: existingUser.password,
+      });
+      if (!loginSuccess) {
+        return;
+      }
+      // Update user via api and get new updated object that is returned from PATCH request
+      const updatedUser = await JoblyAPI.updateUser(
+        user.username,
+        existingUser
+      );
+      // Set updated user
+      setUser(updatedUser);
+      // clear previous errors
+      setErrorMessage(null);
+      // return true for successful update
+      return true;
+    } catch (e) {
+      // setToken(null);
+      setErrorMessage({ type: 'update', message: e });
+      console.log('Update user error:', e);
+      // return true for unsuccessful update
+      return false;
+    }
+  };
+
   const loginUser = async (userToLogin) => {
     try {
       // Login user via api and get token that is returned from POST request
@@ -74,10 +105,14 @@ function App() {
       setToken(userToken);
       //clear previous errors
       setErrorMessage(null);
+      // return true for successful login
+      return true;
     } catch (e) {
       setToken(null);
       setErrorMessage({ type: 'login', message: e });
       console.log('Login user error:', e);
+      // return true for unsuccessful login
+      return false;
     }
   };
 
@@ -113,7 +148,7 @@ function App() {
                   <JobsList />
                 </Route>
                 <Route exact path='/profile'>
-                  <div>Profile</div>
+                  <Profile updateUser={updateUser} error={errorMessage} />
                 </Route>
                 <Route path='/login'>
                   <LoginForm loginUser={loginUser} error={errorMessage} />

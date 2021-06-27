@@ -63,6 +63,13 @@ class JoblyApi {
     return res.token;
   }
 
+  /** Update an existing user. */
+
+  static async updateUser(username, user) {
+    let res = await this.request(`users/${username}`, user, 'patch');
+    return res.user;
+  }
+
   /** Login an exister user. */
 
   static async loginUser(user) {
