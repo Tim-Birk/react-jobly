@@ -7,7 +7,7 @@ import JobCard from './JobCard';
 import JobSearchForm from './JobSearchForm';
 import './JobsList.css';
 
-const JobsList = () => {
+const JobsList = ({ applyToJob }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [jobs, setJobs] = useState([]);
   const { user } = useContext(UserContext);
@@ -42,6 +42,8 @@ const JobsList = () => {
                   title={job.title}
                   salary={job.salary}
                   equity={job.equity}
+                  applyToJob={applyToJob}
+                  user={user}
                 />
               </li>
             ))

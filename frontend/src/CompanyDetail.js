@@ -6,7 +6,7 @@ import JoblyApi from './JoblyAPI';
 import JobCard from './JobCard';
 import './CompanyDetail.css';
 
-const CompanyDetail = () => {
+const CompanyDetail = ({ applyToJob }) => {
   const { handle } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [company, setCompany] = useState({});
@@ -43,6 +43,8 @@ const CompanyDetail = () => {
                   title={job.title}
                   salary={job.salary}
                   equity={job.equity}
+                  applyToJob={applyToJob}
+                  user={user}
                 />
               </li>
             ))

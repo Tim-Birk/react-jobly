@@ -2,7 +2,6 @@ import { useState, useContext, useEffect } from 'react';
 import UserContext from './UserContext';
 import { Form, FormGroup, Label, Input, Button, Alert } from 'reactstrap';
 import { useHistory } from 'react-router-dom';
-import './SignupForm.css';
 
 const SignupForm = ({ addUser, error }) => {
   const intialState = {

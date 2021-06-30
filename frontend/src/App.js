@@ -37,7 +37,6 @@ function App() {
           let currentUser = await JoblyAPI.getUser(username);
           // Set user in app state
           setUser(currentUser);
-          // setApplicationIds(new Set(currentUser.applications));
         } catch (err) {
           console.error(err.message);
           setUser(null);
@@ -125,6 +124,24 @@ function App() {
     }
   };
 
+  const applyToJob = async (jobId) => {
+    try {
+      // Link user to a job posting based on username and jobId
+      await JoblyAPI.applyToJob(user, jobId);
+      // clear previous errors
+      setErrorMessage(null);
+
+      setUser({ ...user, applications: [...user.applications, jobId] });
+      // return true for successful update
+      return true;
+    } catch (e) {
+      setErrorMessage({ type: 'job', message: e });
+      console.log('Apply user to job error:', e);
+      // return true for unsuccessful update
+      return false;
+    }
+  };
+
   return (
     <UserContext.Provider value={{ user }}>
       <BrowserRouter>
@@ -142,10 +159,10 @@ function App() {
                   <CompanyList />
                 </Route>
                 <Route path='/companies/:handle'>
-                  <CompanyDetail />
+                  <CompanyDetail applyToJob={applyToJob} />
                 </Route>
                 <Route exact path='/jobs'>
-                  <JobsList />
+                  <JobsList applyToJob={applyToJob} />
                 </Route>
                 <Route exact path='/profile'>
                   <Profile updateUser={updateUser} error={errorMessage} />
